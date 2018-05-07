@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			input: required {
+				background-color: yellowgreen;
+			}
+			input:required:invalid {
+				background-color: yellow;
+			}
+			/*input:focus {
+				background: blue;
+			}*/
+		</style>
+	</head>
+	<body>
+		<!--组件校验的两种方法： novalidate；formnovalidate-->
+		<form action="javascript:">
+			<div class="row">
+				<label for="name">Name <em>*</em></label>
+				<input type="text" id="name" autofocus required spellcheck="true" autocomplete="off" autocapitalize />
+			</div>
+			<div class="row">
+				<label for="code">Code:</label>
+				<input type="text" id="code" placeholder="QRB-001" title="3个字母-3个数字" pattern="[A-Z]{3}-[0-9]{3}" />
+			</div>
+			<div class="row">
+				<label for="comments">Comment：</label>
+				<textarea id="comments" oninput="validateComments(this)"></textarea>
+			</div>
+			<div class="row">
+				<label for="file">文件：</label>
+				<input type="file" multiple="multiple" />
+			</div>
+			<div class="row">
+				<button type="submit">submit</button>
+			</div>
+		</form>
+		<script type="text/javascript">
+			function validateComments(input) {
+				console.log(input);
+				if (input.value.length < 20) {
+					input.setCustomValidity('不能少于12个字符')
+				} else {
+					input.setCustomValidity('');
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="javascript:" id="form">
+			<div class="row">
+				<label for="width">Width:</label>
+				<input name="width" type="text" />
+			</div>
+			<div class="row">
+				<label for="height">Height:</label>
+				<input type="text" name="height" />
+			</div>
+			<div class="row">
+				<button id="btn">count</button>
+			</div>
+			<div class="row">
+				box area:
+				<output id="rs" form="form" for="width height"></output>
+			</div>
+		</form>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			$('#btn').click(function(){
+				var width = $('input[name="width"]').val();
+				var height = $('input[name="height"]').val();
+				$('#rs').html(width*height)
+			})
+		</script>
+	</body>
+</html>

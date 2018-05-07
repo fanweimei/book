@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form action="javascript:">
+			<div class="row">
+				<label>E-mail</label>
+				<input type="email" multiple="multiple" />
+			</div>
+			<div class="row">
+				<label>url:</label>
+				<input type="url" />
+			</div>
+			<div class="row">
+				<label>search:</label>
+				<input type="search" />
+			</div>
+			<div class="row">
+				<label>telphone:</label>
+				<input type="tel" />
+			</div>
+			<div class="row">
+				<label>number:</label>
+				<input type="number" min="0" max="100" step="0.1" />
+			</div>
+			<div class="row">
+				<label>range:</label>
+				<input type="range" min="0" max="100" value="50" onchange="getRange(this)" />
+			</div>
+			<div class="row">
+				<button type="submit">submit</button>
+			</div>
+		</form>
+		<script type="text/javascript">
+			function getRange(input) {
+				console.log(input)
+				console.log(event)
+			}
+		</script>
+	</body>
+</html>
