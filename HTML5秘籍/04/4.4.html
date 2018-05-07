@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div>
+			<p>test contentEditable function</p>
+			<div contentEditable>
+				you can edit this text
+			</div>
+		</div>
+		<div>
+			<p>test designMode</p>
+			<div>
+				<iframe id="pageEditor" src="4.3.html"></iframe>
+				<div>
+					<button onclick="startEdit()">start</button>
+					<button onclick="stopEdit()">stop</button>
+				</div>
+				<div>the result page:</div>
+				<div id="content">
+					
+				</div>
+			</div>
+		</div>
+		<script>
+			function startEdit(){
+				var editor = document.getElementById('pageEditor');
+				editor.contentWindow.document.designMode ='on';
+			}
+			function stopEdit() {
+				var editor = document.getElementById('pageEditor');editor.contentWindow.document.designMode = 'off';
+				var htmlDisplay = document.getElementById('content');
+				htmlDisplay.textContent = editor.contentWindow.document.body.innerHTML;
+			}
+		</script>
+	</body>
+</html>
