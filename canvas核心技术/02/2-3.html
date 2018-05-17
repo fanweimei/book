@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				border: thin inset #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="cvs" width="600" height="500"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			
+			var gradient = context.createLinearGradient(0, 0, canvas.width, 0);
+			gradient.addColorStop(0, 'blue');
+			gradient.addColorStop(0.25, 'white');
+			gradient.addColorStop(0.5, 'purple');
+			gradient.addColorStop(0.75, 'red');
+			gradient.addColorStop(1, 'yellow');
+			context.fillStyle = gradient;
+			context.fillRect(0, 0, canvas.width, canvas.height);
+		</script>
+	</body>
+</html>

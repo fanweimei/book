@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				border: thin inset #aaa;
+				cursor: crosshair;
+			}
+			#box {
+				position: absolute;
+				border: 3px solid yellow;
+				cursor: crosshair;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<button id="bt">reset</button>
+		</div>
+		<div id="box"></div>
+		<canvas id="cvs" width="813" height="578"></canvas>
+		<script type="text/javascript">
+			var box = document.getElementById('box')
+			var resetbt = document.getElementById('bt')
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			var c_left = canvas.getBoundingClientRect().left;
+			var c_top = canvas.getBoundingClientRect().top;
+			var pos = {}
+			var dragging = false;
+			var startX, startY;
+			
+			var img = new Image();
+			img.onload = function() {
+				context.drawImage(img, 0, 0);
+			}
+			img.src = '../asset/arch.png';
+
+			canvas.onmousedown = function(e) {
+				e.preventDefault();
+				pos.left = e.clientX;
+				pos.top = e.clientY;
+				startX = e.clientX;
+				startY = e.clientY;
+				box.style.left = pos.left + 'px';
+				box.style.top = pos.top + 'px';
+				box.style.display = 'block';
+				dragging = true;
+			}
+			window.onmousemove = function(e) {
+				e.preventDefault();
+				if (dragging) {
+					pos.width = Math.abs(e.clientX - startX);
+					pos.height = Math.abs(e.clientY - startY);
+					pos.left = startX <= e.clientX ? startX : e.clientX;
+					pos.top = startY <= e.clientY ? startY : e.clientY;
+					box.style.left = pos.left + 'px';
+					box.style.top = pos.top + 'px';
+					box.style.width = pos.width + 'px';
+					box.style.height = pos.height + 'px';
+				}
+			}
+			
+			window.onmouseup = function(e) {
+				e.preventDefault();
+				context.drawImage(img, pos.left - c_left, pos.top - c_top, pos.width, pos.height, 0, 0, canvas.width, canvas.height);
+				pos = {};
+				box.style.width = 0;
+				box.style.height = 0;
+				box.style.display = 'none';
+				dragging = false;
+			}
+			
+			resetbt.onclick = function(e) {
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.drawImage(img, 0, 0);
+			}
+		</script>
+	</body>
+</html>

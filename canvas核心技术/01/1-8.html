@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				border: thin inset #aaa;
+			}
+			
+			div {
+				margin: 10px;
+				display: flex;
+				width: 750px;
+				justify-content: center;
+			}
+			
+			button {
+				margin: 0 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<button id="start" onclick="start()">start</button>
+			<button id="stop" onclick="stop()">stop</button>
+		</div>
+		<canvas id="cvs" width="750" height="500"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			var GRID_GAP = 10;
+			var isRunning = false;
+			drawGrid();
+			var balls = getBalls();
+			var time = 1000 / 60;
+			run();
+
+			function drawGrid() {
+				var lineX = 0.5;
+				var lineY = 0.5;
+				context.lineWidth = 0.5;
+				context.strokeStyle = 'lightgray';
+				while(lineX <= canvas.width) {
+					lineX += GRID_GAP;
+					context.beginPath();
+					context.moveTo(lineX, 0);
+					context.lineTo(lineX, canvas.height);
+					context.stroke();
+				}
+				while(lineY <= canvas.height) {
+					context.beginPath();
+					context.moveTo(0, lineY);
+					context.lineTo(canvas.width, lineY);
+					context.stroke();
+					lineY += GRID_GAP;
+				}
+			}
+
+			function getBalls() {
+				var balls = [];
+				for(var i = 0; i < 100; i++) {
+					balls.push({
+						x: Math.random() * (canvas.width - 100) + 50,
+						y: 50,
+						vx: 2 * Math.random(),
+						vy: 2 * Math.random(),
+						radius: 50 * Math.random(),
+						color: 'rgb(' + (Math.random() * 255).toFixed(0) + ',' +
+							(Math.random() * 255).toFixed(0) + ',' +
+							(Math.random() * 255).toFixed(0) + ')'
+					});
+				}
+				return balls;
+			}
+
+			function run() {
+				setInterval(() => {
+					if(isRunning) {
+						context.clearRect(0, 0, canvas.width, canvas.height);
+						drawGrid();
+						for(var ball of balls) {
+							context.beginPath();
+							context.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+							context.fillStyle = ball.color;
+							context.fill();
+							if((ball.x + ball.vx + ball.radius > canvas.width) || (ball.x + ball.vx - ball.radius < 0)) {
+								ball.vx = -ball.vx;
+							}
+							if((ball.y + ball.vy + ball.radius > canvas.height) || (ball.y + ball.vy - ball.radius < 0)) {
+								ball.vy = -ball.vy;
+							}
+							ball.x += ball.vx;
+							ball.y += ball.vy;
+						}
+					}
+				}, time);
+			}
+
+			function start() {
+				isRunning = true;
+			}
+
+			function stop() {
+				isRunning = false;
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				border: thin inset #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="cvs" width="600" height="300"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			context.font = '38pt Arial';
+			context.fillStyle = 'cornflowerblue';
+			context.strokeStyle = 'red';
+			context.fillText('hello canvas', (canvas.width/2 - 150), canvas.height/2 + 15);
+			context.strokeText('hello canvas', (canvas.width/2 - 150), canvas.height/2 + 15)
+		</script>
+	</body>
+</html>

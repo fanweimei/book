@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #efefef;
+			}
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+			}
+			.floating-controls {
+				position: absolute;
+				left: 475px;
+				top: 20px;
+			}
+			.floating-controls label {
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="floating-controls">
+			<label>
+				<input type="checkbox" id="dir" onclick="draw()" />
+				Same Direction
+			</label>
+			<label>
+				<input type="checkbox" id="animation" />
+				Annotations
+			</label>
+		</div>
+		<canvas id="cvs" width="600" height="400"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var dirDom = document.getElementById('dir');
+			var animationDom = document.getElementById('animation');
+			var cw = canvas.width;
+			var ch = canvas.height;
+			var context = canvas.getContext('2d');
+			context.fillStyle = 'rgba(100, 140, 230, 0.5)';
+			context.strokeStyle = context.fillStyle;
+			
+			function drawGrid() {
+				context.save();
+				context.strokeStyle = 'lightgray';
+				context.lineWidth = 0.5;
+				var lineX = 10;
+				var lineY = 10;
+				while(lineX<cw) {
+					context.beginPath();
+					context.moveTo(lineX, 0);
+					context.lineTo(lineX, ch);
+					context.stroke();
+					lineX += 10;
+				}
+				while(lineY<ch) {
+					context.beginPath();
+					context.moveTo(0, lineY);
+					context.lineTo(cw, lineY);
+					context.stroke();
+					lineY += 10;
+				}
+				context.restore();	
+			}
+			function drawArc(dir) {
+				context.save();
+				context.beginPath();
+				context.arc(300, 170, 150, 0, Math.PI*2, true);
+				context.arc(300, 170, 100, 0, Math.PI*2, dir);
+				context.shadowBlur = 15;
+				context.shadowColor = 'rgba(0, 0, 0, 0.8)';
+				context.shadowOffsetX = 12;
+				context.shadowOffsetY = 12;
+				context.fill();
+				context.shadowColor = undefined;
+				context.shadowOffsetX = 0;
+				context.shadowOffsetY = 0;
+				context.stroke();
+				context.restore();
+			}
+			function drawText() {
+				context.save();
+				context.font = '18px Arial';
+				context.fillStyle = 'rgb(0, 0, 200)';
+				context.fillText('Two arcs, one path', 10, 30);
+				context.font = '16px Lucida Sans';
+				context.fillStyle = 'navy';
+				context.fillText('context.arc(300, 170, 150, 0, Math.PI*2, true)', 10, 360);
+				context.fillText('context.arc(300, 170, 100, 0, Math.PI*2, dir)', 10, 380);
+				context.restore();
+			}
+			function drawAnimation(dir) {
+				context.save();
+				context.beginPath();
+				context.moveTo(300, 170);
+				context.lineTo(100, 250);
+				context.strokeStyle = 'blue';
+				context.stroke();
+				context.beginPath();
+				context.arc(100, 250, 3, 0, Math.PI*2);
+				context.fillStyle = 'navy';
+				context.fill();
+//				context.font = '16px Lucida Sans';
+//				context.fillText('2', 95, 250);
+				context.restore();
+			}
+			function draw() {
+				context.clearRect(0, 0, cw, ch);
+				drawGrid();
+				drawArc(dirDom.checked);
+				drawText();
+				drawAnimation();
+			}
+			draw();
+			
+		</script>
+	</body>
+</html>

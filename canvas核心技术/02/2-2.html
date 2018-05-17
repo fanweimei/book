@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			#cvs {
+				margin: 10px;
+				background: #fff;
+				border: thin inset #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="cvs" width="600" height="500"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			
+			context.font = '24px Helvetical';
+			context.fillText('this are a test text!99999', 175, 200);
+			context.lineJoin = 'bevel';
+			context.lineWidth = 10;
+			context.strokeStyle = 'goldenrod';
+			context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+			context.strokeRect(75, 100, 200, 200);
+			context.fillRect(325, 100, 200, 200);
+		</script>
+	</body>
+</html>

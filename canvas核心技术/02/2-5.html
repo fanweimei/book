@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #fff;
+			}
+			#cvs {
+				margin: 10px;
+				background: #eee;
+				border: thin inset #aaa;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<label>
+				<input type="radio" name="mode" value="repeat" checked/>
+				repeat
+			</label>
+			<label>
+				<input type="radio" name="mode" value="repeat-x" />
+				repeat-x
+			</label>
+			<label>
+				<input type="radio" name="mode" value="repeat-y" />
+				repeat-y
+			</label>
+			<label>
+				<input type="radio" name="mode" value="no-repeat" />
+				no-repeat
+			</label>
+		</div>
+		<canvas id="cvs" width="500" height="400"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('cvs');
+			var context = canvas.getContext('2d');
+			
+			var img = new Image();
+			img.onload = function() {
+				draw('repeat');
+				
+			}
+			img.src = '../asset/redball.png';
+			
+			var modes = document.querySelectorAll('input[name="mode"]');
+			console.log(modes.length)
+			for (var i=0; i<modes.length; i++) {
+				modes[i].onclick = function(e) {
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					draw(this.value);
+				}
+			}
+			function draw(mode) {
+				var pattern = context.createPattern(img, mode);
+				context.fillStyle = pattern;
+				context.fillRect(0, 0, canvas.width, canvas.height);
+			}
+		</script>
+	</body>
+</html>

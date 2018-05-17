@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			#canvas {
+				position: absolute;
+				left: 0px;
+				top: 200px;
+				margin: 20px;
+				background: #fff;
+				border: thin inset rgba(100, 150, 230, 0.5);
+				cursor: pointer;
+			}
+			#readout {
+				margin-top: 10px;
+				margin-left: 15px;
+				color: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="readout"></div>
+		<canvas id="canvas" width="500" height="250"></canvas>
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas');
+			var readout = document.getElementById('readout');
+			var context = canvas.getContext('2d');
+			var spritesheet = new Image();
+			spritesheet.onload = function() {
+				drawImg();
+			}
+			spritesheet.src = '../asset/running-sprite-sheet.png';
+			var box = canvas.getBoundingClientRect();
+			var scaleX = canvas.width/box.width;
+			var scaleY = canvas.height/box.height;
+			drawBg();
+			
+			canvas.onmousemove = function(e) {
+				var loc = {
+					x: e.clientX - box.left * scaleX,
+					y: e.clientY - box.top * scaleY
+				};
+				drawBg();
+				drawImg();
+				context.strokeStyle = 'rgba(0, 0, 230, 0.8)';
+				context.lineWidth = 1;
+				context.beginPath();
+				context.moveTo(0, loc.y);
+				context.lineTo(canvas.width, loc.y);
+				context.stroke();
+				context.beginPath();
+				context.moveTo(loc.x, 0);
+				context.lineTo(loc.x, canvas.height);
+				context.stroke();
+				
+				readout.innerHTML = '(' + loc.x.toFixed(2) + ', ' + loc.y.toFixed(2) + ')';
+			}
+			
+			function drawBg() {
+				var GAP = 12;
+				var linePos = canvas.height;
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				context.strokeyStyle = 'lightgray';
+				context.lineWidth = 0.2;
+				while(linePos > GAP * 6) {
+					linePos -= GAP;
+					context.beginPath();
+					context.moveTo(0, linePos);
+					context.lineTo(canvas.width, linePos);
+					context.stroke();
+				}
+			}
+			
+			function drawImg() {
+				context.drawImage(spritesheet, 0, 0);
+			}
+		</script>
+	</body>
+</html>
