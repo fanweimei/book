@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -7,23 +8,28 @@
 			body {
 				background: #efefef;
 			}
+			
 			#cvs {
 				margin: 10px;
 				background: #fff;
 				box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 			}
+			
 			.floating-controls {
 				position: absolute;
 				left: 475px;
 				top: 20px;
 			}
+			
 			.floating-controls label {
 				display: block;
 			}
 		</style>
 	</head>
+
 	<body>
 		<canvas id="cvs" width="600" height="400"></canvas>
+		<script src="share.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var canvas = document.getElementById('cvs');
 			var dirDom = document.getElementById('dir');
@@ -31,38 +37,36 @@
 			var cw = canvas.width;
 			var ch = canvas.height;
 			var context = canvas.getContext('2d');
-			context.fillStyle = 'rgba(100, 140, 230, 0.5)';
-			context.strokeStyle = context.fillStyle;
-			
-			function drawGrid() {
-				context.save();
-				context.strokeStyle = 'lightgray';
-				context.lineWidth = 0.5;
-				var lineX = 10;
-				var lineY = 10;
-				while(lineX<cw) {
-					context.beginPath();
-					context.moveTo(lineX, 0);
-					context.lineTo(lineX, ch);
-					context.stroke();
-					lineX += 10;
-				}
-				while(lineY<ch) {
-					context.beginPath();
-					context.moveTo(0, lineY);
-					context.lineTo(cw, lineY);
-					context.stroke();
-					lineY += 10;
-				}
-				context.restore();	
-			}
-			
+			context.fillStyle = 'goldenrod';
+
 			function draw() {
 				context.clearRect(0, 0, cw, ch);
-				drawGrid();
+				drawGrid(context);
+				context.save();
+				context.shadowColor = 'rgba(200, 200, 0, 0.5)';
+				context.shadowOffsetX = 12;
+				context.shadowOffsetY = 12;
+				context.shadowBlur = 15;
+				
+				context.beginPath();
+				context.rect(110, 25, 370, 335)
+				context.arc(300, 300, 40, 0, Math.PI*2, true);
+				context.moveTo(310, 75);
+				context.lineTo(310, 110);
+				context.lineTo(365, 110);
+				context.lineTo(365, 75);
+				context.closePath();
+				context.moveTo(400, 200);
+				context.lineTo(250, 115);
+				context.lineTo(200, 200);
+				context.closePath();
+//				context.stroke();
+//				context.restore();
+				context.fill();	
+				
 			}
 			draw();
-			
 		</script>
 	</body>
+
 </html>
